@@ -1,5 +1,1 @@
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="ログイン" />
-</form>
+{% include "_form.html" with submit_btn_label="ログイン" %}
