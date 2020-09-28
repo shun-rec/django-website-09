@@ -17,21 +17,10 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth.decorators import login_required
 
-from django.contrib.auth import views as auth_views
-
 from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", login_required(TemplateView.as_view(template_name="registration/index.html")), name="index"),
-    path('login/', auth_views.LoginView.as_view(), name="login"),
-    path('logout/', auth_views.LogoutView.as_view(), name="logout"),
-    path(
-        'password-change/',
-        auth_views.PasswordChangeView.as_view(template_name='registration/password-change.html'),
-        name="password_change"
-    ),
-    path('change-password/done/',
-        auth_views.PasswordChangeDoneView.as_view(template_name="registration/password-change-done.html"), name="password_change_done"
-    ),
+    path('', include("django.contrib.auth.urls")),
 ]
