@@ -12,14 +12,14 @@
 
 ```py
 django-admin startproject pj_login
+cd pj_login
 ```
 
 ### 新規アプリの作成
 
-何でも良いですが、今回はdjangoのデフォルトのアカウント周りのアプリ名に合わせて`registration`とします。
+名前は何でも良いですが、今回はdjangoのデフォルトのアカウント周りのアプリ名に合わせて`registration`とします。
 
 ```py
-cd pj_login
 python manage.py startapp registration
 ```
 
