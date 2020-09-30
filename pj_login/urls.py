@@ -19,11 +19,12 @@ from django.contrib.auth.decorators import login_required
 
 from django.views.generic import TemplateView
 
-from registration.views import SignUpView
+from registration.views import SignUpView, ActivateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", login_required(TemplateView.as_view(template_name="registration/index.html")), name="index"),
     path('', include("django.contrib.auth.urls")),
     path('signup/', SignUpView.as_view(), name='signup'),
+    path('activate/<uidb64>/<token>/', ActivateView.as_view(), name='activate'),    
 ]
