@@ -257,11 +257,13 @@ LOGOUT_REDIRECT_URL = "/login/"
 {% extends "base.html" %}
 {% block main %}
 <h2>パスワード再設定</h2>
+
 {% if validlink %}
-{% include "_form.html" with submit_label="変更" %}
+    {% include "_form.html" with submit_label="変更" %}
 {% else %}
-<p>無効なリンクです。</p>
+    <p>無効なリンクです。</p>
 {% endif %}
+
 {% endblock %}
 ```
 
