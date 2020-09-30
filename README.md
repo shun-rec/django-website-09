@@ -19,7 +19,7 @@ django-admin startproject pj_login
 何でも良いですが、今回はdjangoのデフォルトのアカウント周りのアプリ名に合わせて`registration`とします。
 
 ```py
-cd pj_form
+cd pj_login
 python manage.py startapp registration
 ```
 
@@ -42,6 +42,14 @@ ALLOWED_HOSTS = ["*"]
 
 ```py
     'registration',
+```
+
+### データベースの作成
+
+djagnoのユーザーモデルを使うので、データベースを作成します。
+
+```sh
+python manage.py migrate
 ```
 
 ### スーパーユーザーを作成
@@ -102,7 +110,6 @@ python manage.py createsuperuser
 <p><a href="{% url 'password_change' %}">パスワードの変更</a></p>
 <p><a href="{% url 'password_reset' %}">パスワードを忘れた場合</a></p>
 {% endblock %}
-
 ```
 
 ## ログイン/ログアウトを作ろう
@@ -177,6 +184,7 @@ LOGOUT_REDIRECT_URL = "/login/"
 ```html
 {% extends "base.html" %}
 {% block main %}
+<h2>ログイン</h2>
 {% include "_form.html" with submit_label="ログイン" %}
 {% endblock %}
 ```
@@ -200,7 +208,7 @@ LOGOUT_REDIRECT_URL = "/login/"
 ```html
 {% extends "base.html" %}
 {% block main %}
-<h2>パスワード設定</h2>
+<h2>パスワード変更</h2>
 {% include "_form.html" with submit_label="変更" %}
 {% endblock %}
 ```
@@ -212,6 +220,7 @@ LOGOUT_REDIRECT_URL = "/login/"
 ```html
 {% extends "base.html" %}
 {% block main %}
+<h2>パスワード変更完了</h2>
 <p>パスワードの変更が完了しました。</p>
 {% endblock %}
 ```
@@ -223,7 +232,7 @@ LOGOUT_REDIRECT_URL = "/login/"
 ```html
 {% extends "base.html" %}
 {% block main %}
-<h2>パスワードリセットメール送信</h2>
+<h2>パスワード再設定</h2>
 {% include "_form.html" with submit_label="送信" %}
 {% endblock %}
 ```
@@ -235,7 +244,8 @@ LOGOUT_REDIRECT_URL = "/login/"
 ```html
 {% extends "base.html" %}
 {% block main %}
-<p>パスワードの変更が完了しました。</p>
+<h2>パスワード再設定メール送信完了</h2>
+<p>パスワード再設定メールを送信しました。</p>
 {% endblock %}
 ```
 
@@ -246,7 +256,7 @@ LOGOUT_REDIRECT_URL = "/login/"
 ```html
 {% extends "base.html" %}
 {% block main %}
-<h2>パスワードリセット</h2>
+<h2>パスワード再設定</h2>
 {% if validlink %}
 {% include "_form.html" with submit_label="変更" %}
 {% else %}
@@ -262,8 +272,8 @@ LOGOUT_REDIRECT_URL = "/login/"
 ```html
 {% extends "base.html" %}
 {% block main %}
-<h2>パスワード設定完了</h2>
-<p>パスワード変更が完了しました。</p>
+<h2>パスワード再設定完了</h2>
+<p>パスワードの再設定が完了しました。</p>
 <p><a href="{% url 'login' %}">ログイン</a></p>
 {% endblock %}
 ```
