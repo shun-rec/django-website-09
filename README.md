@@ -103,7 +103,7 @@ python manage.py createsuperuser
 {% endblock %}
 ```
 
-## ログイン/ログアウト画面を作ろう
+## ログイン/ログアウトを作ろう
 
 ### URLの設定
 
@@ -150,14 +150,122 @@ LOGOUT_REDIRECT_URL = "/login/"
 * LOGIN_REDIRECT_URL: ログインに成功した場合の移動先URL
 * LOGOUT_REDIRECT_URL: ログアウト後の移動先URL
 
+### ログイン画面のテンプレートを作ろう
+
+#### 共通のフォーム部分を作ろう
+
+フォーム部分のHTMLはいくつかのページで使うので共通のものを１つ作っておきます。
+
+`registration/templates/_form.html`を以下内容で新規作成します。
+
+* submit_labelにボタンのラベルを渡してカスタマイズ出来るフォームです。
+
+```html
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="{{ submit_label }}" />
+</form>
+```
+
+#### ログイン画面のテンプレートを作ろう
+
+`registration/templates/registration/login.html`を以下内容で新規作成します。
+
+```html
+{% extends "base.html" %}
+{% block main %}
+{% include "_form.html" with submit_label="ログイン" %}
+{% endblock %}
+```
+
 ### 確認してみよう
 
-djangoがデフォルトで用意しているページが表示されたらOKです。
+* トップ画面がログイン必須
+* ログイン画面が自分で用意したデザイン
+* その他の画面はdjangoデフォルトのデザイン
+
+であればOKです。
 
 ## テンプレートをカスタマイズしよう
 
-### ログイン
+指定された場所にテンプレートを作るだけでそれらが使われるようになります。
 
-### パスワード変更
+### パスワード変更(password_change)
 
-### パスワード再発行
+`registration/templates/registration/password_change_form.html`
+
+```html
+{% extends "base.html" %}
+{% block main %}
+<h2>パスワード設定</h2>
+{% include "_form.html" with submit_label="変更" %}
+{% endblock %}
+```
+
+### パスワード変更完了(password_change_done)
+
+`registration/templates/registration/password_change_done.html`
+
+```html
+{% extends "base.html" %}
+{% block main %}
+<p>パスワードの変更が完了しました。</p>
+{% endblock %}
+```
+
+### パスワード再発行(password_reset)
+
+`registration/templates/registration/password_reset_form.html`
+
+```html
+{% extends "base.html" %}
+{% block main %}
+<h2>パスワードリセットメール送信</h2>
+{% include "_form.html" with submit_label="送信" %}
+{% endblock %}
+```
+
+### パスワード再発行完了(password_reset_done)
+
+`registration/templates/registration/password_reset_done.html`
+
+```html
+{% extends "base.html" %}
+{% block main %}
+<p>パスワードの変更が完了しました。</p>
+{% endblock %}
+```
+
+### パスワード再設定(password_reset_confirm)
+
+`registration/templates/registration/password_reset_confirm.html`
+
+```html
+{% extends "base.html" %}
+{% block main %}
+<h2>パスワードリセット</h2>
+{% if validlink %}
+{% include "_form.html" with submit_label="変更" %}
+{% else %}
+<p>無効なリンクです。</p>
+{% endif %}
+{% endblock %}
+```
+
+### パスワード再設定完了(password_reset_complete)
+
+`registration/templates/registration/password_reset_complete.html`
+
+```html
+{% extends "base.html" %}
+{% block main %}
+<h2>パスワード設定完了</h2>
+<p>パスワード変更が完了しました。</p>
+<p><a href="{% url 'login' %}">ログイン</a></p>
+{% endblock %}
+```
+
+### 確認しよう
+
+すべての画面のデザインが変わっていればOKです。
