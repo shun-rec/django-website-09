@@ -95,12 +95,14 @@ python manage.py createsuperuser
 ```html
 {% extends "base.html" %}
 {% block main %}
-<h1>{{ user }}さん、こんにちは！</h1>
+<h2>会員ページ</h2>
+<p>{{ user }}さん、こんにちは！</p>
 
 <p><a href="{% url 'logout' %}">ログアウト</a></p>
 <p><a href="{% url 'password_change' %}">パスワードの変更</a></p>
 <p><a href="{% url 'password_reset' %}">パスワードを忘れた場合</a></p>
 {% endblock %}
+
 ```
 
 ## ログイン/ログアウトを作ろう
