@@ -159,6 +159,15 @@ LOGOUT_REDIRECT_URL = "/login/"
 * LOGIN_REDIRECT_URL: ログインに成功した場合の移動先URL
 * LOGOUT_REDIRECT_URL: ログアウト後の移動先URL
 
+ページが`https`の環境では、最後に以下も追記してください。  
+メールで送られるURLが`http`ではなく`https`になります。
+
+```py
+# 暗号化されたhttpsを使うようにする
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
+```
+
 ### ログイン画面のテンプレートを作ろう
 
 #### 共通のフォーム部分を作ろう
